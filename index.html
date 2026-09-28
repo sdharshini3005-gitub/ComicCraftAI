@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ComicCraft — AI Comic Creator
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        🦸 ComicCraft
+    </div>
+
+    <a
+        href="/docs"
+        target="_blank"
+    >
+        API Docs
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <p class="eyebrow">
+            AI COMIC STORY CREATOR
+        </p>
+
+        <h1>
+            Turn your idea into a comic.
+        </h1>
+
+        <p>
+            Describe your story, character, setting,
+            tone and art style. ComicCraft creates
+            the panels, narration, dialogue,
+            illustrations and PDF.
+        </p>
+
+    </section>
+
+
+    {% if error %}
+
+    <div class="alert">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <section class="card">
+
+        <form
+            action="/generate"
+            method="post"
+            id="comicForm"
+        >
+
+            <label for="story_prompt">
+                Story Prompt
+            </label>
+
+            <textarea
+                id="story_prompt"
+                name="story_prompt"
+                required
+                placeholder="Example: A brave fox discovers a glowing tree in an enchanted forest."
+            >{{ form.story_prompt if form else '' }}</textarea>
+
+
+            <div class="grid two">
+
+                <div>
+
+                    <label for="character_name">
+                        Main Character Name
+                    </label>
+
+                    <input
+                        id="character_name"
+                        name="character_name"
+                        required
+                        value="{{ form.character_name if form else '' }}"
+                        placeholder="Milo"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="setting">
+                        Setting
+                    </label>
+
+                    <input
+                        id="setting"
+                        name="setting"
+                        required
+                        value="{{ form.setting if form else '' }}"
+                        placeholder="Enchanted Forest"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="grid three">
+
+                <div>
+
+                    <label for="tone">
+                        Story Tone
+                    </label>
+
+                    <select
+                        id="tone"
+                        name="tone"
+                    >
+
+                        <option>
+                            funny
+                        </option>
+
+                        <option>
+                            dramatic
+                        </option>
+
+                        <option>
+                            light-hearted
+                        </option>
+
+                        <option>
+                            poetic
+                        </option>
+
+                        <option>
+                            adventurous
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="art_style">
+                        Art Style
+                    </label>
+
+                    <select
+                        id="art_style"
+                        name="art_style"
+                    >
+
+                        <option>
+                            comic book
+                        </option>
+
+                        <option>
+                            anime
+                        </option>
+
+                        <option>
+                            pixel art
+                        </option>
+
+                        <option>
+                            realistic
+                        </option>
+
+                        <option>
+                            watercolor
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="panel_count">
+                        Panels
+                    </label>
+
+                    <select
+                        id="panel_count"
+                        name="panel_count"
+                    >
+
+                        {% for n in range(3, 9) %}
+
+                        <option
+                            value="{{ n }}"
+                            {% if n == default_panels %}
+                            selected
+                            {% endif %}
+                        >
+                            {{ n }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary"
+                type="submit"
+                id="generateBtn"
+            >
+                Create My Comic ✨
+            </button>
+
+
+            <p class="hint">
+                Generation can take a little time because
+                the app creates the story and an image
+                for every panel.
+            </p>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<script
+    src="/static/js/app.js"
+></script>
+
+</body>
+</html>
